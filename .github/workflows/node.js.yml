@@ -25,8 +25,9 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-    
-    - name: Deploy 🚀
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        folder: build
+
+    # I don't need CD
+    # - name: Deploy 🚀
+    #   uses: JamesIves/github-pages-deploy-action@v4
+    #   with:
+    #     folder: build
