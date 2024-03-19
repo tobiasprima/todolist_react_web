@@ -30,6 +30,7 @@ test('allows user to type in a new todo', () => {
     </Provider>);
 
   const inputElement = screen.getByLabelText(/Add to list/i);
+  // eslint-disable-next-line testing-library/no-unnecessary-act
   act(() => {
     fireEvent.change(inputElement, { target: { value: 'New Todo Item' } });
   });
