@@ -21,13 +21,12 @@ const TodoList = () => {
         error
     } = useGetTodosQuery()
     const [ addTodo ] = useAddTodoMutation()
-    const [ updateTodo ] = useUpdateTodoMutation()
     const [ doneTodo ] = useDoneTodoMutation()
     const [ deleteTodo ] = useDeleteTodoMutation()
 
     const handleSubmit = (e)=> {
         e.preventDefault()
-        //addTodo
+        addTodo({title: newTodo})
         setNewTodo('')
     }
 
@@ -52,7 +51,24 @@ const TodoList = () => {
     if (isLoading) {
         content = <p>Loading ...</p>
     } else if (isSuccess){
-        content = JSON.stringify(todos)
+        content = todos.map(todo => {
+            return (
+                <article key={todo.id}>
+                    <div className="todo">
+                        <input 
+                        type="checkbox" 
+                        checked={todo.status}
+                        id={todo.id}
+                        onChange={()=> doneTodo({ ...todo, status: !todo.status})}
+                        />
+                        <label htmlFor={todo.id}>{todo.title}</label>
+                    </div>
+                    <button className="trash" onClick={()=> deleteTodo({ id: todo.id})}>
+                        <FontAwesomeIcon icon={faTrash}/>
+                    </button>
+                </article>
+            )
+        })
     } else if (isError) {
         content = <p>{error.message || 'Error fetching todos'}</p>
     }
