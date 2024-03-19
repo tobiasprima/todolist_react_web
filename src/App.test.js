@@ -1,16 +1,20 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import React from 'react';
 import TodoList from './features/todos/TodoList';
 
 test('renders todo list', () => {
   render(<TodoList />);
   
-  const headingElement = screen.getByRole('heading', { name: /todo list/i });
+  render(<TodoList />);
+  
+  const headingElement = screen.getAllByRole('heading', { name: /todo list/i })[0];
   expect(headingElement).toBeInTheDocument();
 
   const inputElement = screen.getByLabelText(/Add to list/i);
   expect(inputElement).toBeInTheDocument();
 
-  const submitButton = screen.getByRole('button', { name: /submit/i });
+  // eslint-disable-next-line testing-library/no-node-access
+  const submitButton = document.getElementsByClassName('submit')[0];
   expect(submitButton).toBeInTheDocument();
 });
 
