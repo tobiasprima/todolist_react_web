@@ -12,6 +12,7 @@ input[type="text"], button {
 main {
   margin: auto;
   max-width: 600px;
+  width: 100%;
 }
 
 h1 {
@@ -24,6 +25,25 @@ article {
   justify-content: space-between;
   align-items: center;
   border: 1px solid hsl(0, 0%, 58%);
+}
+
+h3 {
+  margin-bottom: 0.3rem;
+}
+
+.new-item-section {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid hsl(0, 0%, 58%);
+  max-width: 100%;
+}
+
+.new-item-section form {
+  display: flex;
+  align-items: center;
+  flex: 1;
 }
 
 .todo {
@@ -55,15 +75,6 @@ button {
   filter:brightness(120%)
 }
 
-form {
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid #333;
-  margin-bottom: 1rem;
-}
-
 form label {
   position: absolute;
   left: -10000px;
@@ -73,6 +84,7 @@ form label {
   width: 100%;
   padding-right: 30px;
 }
+
 
 input[type="text"] {
   width: 100%;
@@ -88,4 +100,32 @@ input[type="text"] {
 
 .submit:focus, .submit:hover {
   background-color: limegreen;
+}
+
+.bottom-section {
+  position: fixed;
+  bottom: 0;
+  padding-bottom: 4rem;
+  max-width: 600px;
+  width: 100%;
+}
+
+.progress-container {
+  margin: auto;
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.progress-bar {
+  width: 100%;
+  top: 60px;
+}
+
+
+.progress-label {
+  margin-right: 1rem
 }
