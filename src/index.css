@@ -3,6 +3,12 @@
 body {
   font-family: 'Nunito', sans-serif;
   font-size: 1.5rem;
+  color: #9f9fb0;
+}
+
+html{
+  background-image: linear-gradient(to bottom right, #eef6fe, #ecedfe);
+  min-height: 100vh;
 }
 
 input[type="text"], button {
@@ -17,6 +23,7 @@ main {
 
 h1 {
   margin-bottom: 0.5rem;
+  color: #909ac0;
 }
 
 article {
@@ -84,6 +91,7 @@ form label {
 
 .new-todo {
   width: 100%;
+  padding-right: 25px;
 }
 
 
@@ -95,12 +103,12 @@ input[type="text"] {
 }
 
 .submit {
-  background-color: gray;
+  background-color: #798ed2;
   color: #fff;
 }
 
 .submit:focus, .submit:hover {
-  background-color: limegreen;
+  background-color: white;
 }
 
 .bottom-section {
@@ -147,4 +155,8 @@ input[type="text"] {
 
 .content{
   margin-bottom: 2rem;
+}
+
+.submit:hover .svg-inline--fa {
+  color: black; /* Change to your desired color */
 }
