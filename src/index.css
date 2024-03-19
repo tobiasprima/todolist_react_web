@@ -118,14 +118,28 @@ input[type="text"] {
   display: flex;
   align-items: center;
   padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 .progress-bar {
   width: 100%;
   top: 60px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: white;
+  background-image: white
 }
 
+.progress-bar::-webkit-progress-bar {
+  background-color: white;
+  border-radius: 10px;
+}
+
+.progress-bar::-webkit-progress-value {
+  background-image: linear-gradient(to right, #99b5fa, #92aafa);
+  border-radius: 10px;
+
+}
 
 .progress-label {
   margin-right: 1rem
