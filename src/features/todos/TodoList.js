@@ -53,17 +53,17 @@ const TodoList = () => {
     } else if (isSuccess){
         content = todos.map(todo => {
             return (
-                <article key={todo.id}>
+                <article key={todo._id}>
                     <div className="todo">
                         <input 
                         type="checkbox" 
                         checked={todo.status}
-                        id={todo.id}
-                        onChange={()=> doneTodo({ ...todo, status: !todo.status})}
+                        id={todo._id}
+                        onChange={()=> doneTodo({ id: todo._id, status: !todo.status})}
                         />
-                        <label htmlFor={todo.id}>{todo.title}</label>
+                        <label htmlFor={todo._id}>{todo.title}</label>
                     </div>
-                    <button className="trash" onClick={()=> deleteTodo({ id: todo.id})}>
+                    <button className="trash" onClick={()=> deleteTodo({ id: todo._id})}>
                         <FontAwesomeIcon icon={faTrash}/>
                     </button>
                 </article>
