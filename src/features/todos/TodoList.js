@@ -1,13 +1,13 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faTrash, faUpload, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { 
     useGetTodosQuery,
     useAddTodoMutation,
     useUpdateTodoMutation,
     useDoneTodoMutation,
-    useDeleteTodoMutation 
+    useDeleteTodoMutation
 } from '../../app/api/apiSlice'
 
 const TodoList = () => {
@@ -44,7 +44,7 @@ const TodoList = () => {
                 />
             </div>
             <button className="submit">
-                <FontAwesomeIcon icon={faUpload} />
+                <FontAwesomeIcon icon={faPlus} />
             </button>
         </form>
     </div>
@@ -66,7 +66,7 @@ const TodoList = () => {
                         <label htmlFor={todo._id}>{todo.title}</label>
                     </div>
                     <button className="trash" onClick={()=> deleteTodo({ id: todo._id})}>
-                        <FontAwesomeIcon icon={faTrash}/>
+                        <FontAwesomeIcon icon={faXmark}/>
                     </button>
                 </article>
             )
