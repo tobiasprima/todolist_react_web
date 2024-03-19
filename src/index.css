@@ -60,10 +60,20 @@ h3 {
   align-items: center;
 }
 
+.todo input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+}
+
 input[type="checkbox"] {
   min-width: 30px;
   min-height: 30px;
   margin-right: 1rem;
+  border-radius: 50px;
+  border: 2px solid #7491d0;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #7491d0;
 }
 
 button {
@@ -158,5 +168,5 @@ input[type="text"] {
 }
 
 .submit:hover .svg-inline--fa {
-  color: black; /* Change to your desired color */
+  color: black;
 }
