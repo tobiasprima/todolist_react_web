@@ -1,7 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faTrash, faUpload, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { 
     useGetTodosQuery,
     useAddTodoMutation,
@@ -11,6 +11,7 @@ import {
 } from '../../app/api/apiSlice'
 
 const TodoList = () => {
+    const [ todoWithoutDB, setTodoWithoutDB ] = useState('')
     const [ newTodo, setNewTodo ] = useState('')
 
     const {
@@ -24,10 +25,37 @@ const TodoList = () => {
     const [ doneTodo ] = useDoneTodoMutation()
     const [ deleteTodo ] = useDeleteTodoMutation()
 
+    useEffect(() => {
+        if (todos) {
+            setTodoWithoutDB(todos)
+        }
+    }, [todos])
+
     const handleSubmit = (e)=> {
         e.preventDefault()
-        addTodo({title: newTodo})
+        if (newTodo.trim() === '') return // Prevent adding empty todos
+        if (!isError){
+            addTodo({title: newTodo})
+        } else {
+            // Handle submit without database
+            const newTodoWithoutDB = {_id: Date.now(), title: newTodo, status: false}
+            setTodoWithoutDB(prevTodos => [...prevTodos, newTodoWithoutDB])
+        }
+        
         setNewTodo('')
+    }
+
+    // Handle toggle without database
+    const handleToggleStatus = (id) => {
+        setTodoWithoutDB(prevTodos => 
+            prevTodos.map(todo => todo._id === id ? {...todo, status: !todo.status} : todo
+                )
+            )
+    }
+
+    // Handle delete without database
+    const handleDeleteTodo = (id) => {
+        setTodoWithoutDB(prevTodos => prevTodos.filter(todo => todo._id !== id))
     }
 
     const newItemSection = 
