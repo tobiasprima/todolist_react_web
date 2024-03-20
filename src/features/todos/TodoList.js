@@ -40,7 +40,6 @@ const TodoList = () => {
                 id="new-todo"
                 value={newTodo}
                 onChange={(e)=> setNewTodo(e.target.value)}
-                placeholder="Add New Todo"
                 />
             </div>
             <button className="submit">
@@ -98,7 +97,7 @@ const TodoList = () => {
         </div>
         <hr />
         <div className="bottom-section">
-            <h3>Add to list</h3>
+            <p>Add to list</p>
             {newItemSection}
         </div>
     </main>

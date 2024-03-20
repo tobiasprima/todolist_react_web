@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
 body {
-  font-family: 'Roboto';
+  font-family: Arial, sans-serif;
   font-size: 1.5rem;
   color: #9f9fb0;
 }
@@ -31,13 +31,18 @@ article {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid hsl(0, 0%, 58%);
+  border: 1px solid white;
+  border-radius: 5px;
+  border-left: 8px solid #7d8fc9 ;
+  background-color: white;
   margin-bottom: 1.5rem;
 }
 
-h3 {
-  margin-bottom: 0.3rem;
+p {
   color: #909ac0;
+  padding-left: 0.3rem;
+  padding-bottom: 0;
+  margin-bottom: 0.5rem;
 }
 
 .new-item-section {
@@ -68,10 +73,15 @@ input[type="checkbox"] {
   min-width: 30px;
   min-height: 30px;
   margin-right: 1rem;
-  border-radius: 50px;
-  border: 2px solid #7491d0;
+  border-radius: 10%;
+  border: 1px solid #7491d0;
   accent-color: #7491d0;
 }
+
+.checkbox label:before {
+  border-radius: 10%;
+}
+
 
 button {
   min-width: 50px;
