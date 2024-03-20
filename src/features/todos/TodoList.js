@@ -11,7 +11,7 @@ import {
 } from '../../app/api/apiSlice'
 
 const TodoList = () => {
-    const [ todoWithoutDB, setTodoWithoutDB ] = useState('')
+    const [ todoWithoutDB, setTodoWithoutDB ] = useState([])
     const [ newTodo, setNewTodo ] = useState('')
 
     const {
@@ -25,8 +25,26 @@ const TodoList = () => {
     const [ doneTodo ] = useDoneTodoMutation()
     const [ deleteTodo ] = useDeleteTodoMutation()
 
+    // Effect to load todos from local storage if there is cache
     useEffect(() => {
-        if (todos) {
+        const storedTodos = JSON.parse(localStorage.getItem('todos'));
+        if (!todos && storedTodos) {
+            // Set todos to local storage's todos
+            setTodoWithoutDB(storedTodos)
+        } else if (!todos){
+            // If there is no DB and nothing on cache, set the todos to empty array
+            setTodoWithoutDB([])
+        }
+    }, [todos])
+
+    // Effect to save todos to local storage when todos change
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todoWithoutDB))
+    }, [todoWithoutDB])
+
+    // Effect to update local state when there is DB and todos are fetched
+    useEffect(()=> {
+        if (todos && !isError) {
             setTodoWithoutDB(todos)
         }
     }, [todos])
@@ -100,7 +118,23 @@ const TodoList = () => {
             )
         })
     } else if (isError) {
-        content = <p>{error.message || 'Error fetching todos'}</p>
+        content = (
+            todoWithoutDB.map(todo => (
+                <article key={todo._id}>
+                    <div className="todo">
+                        <input 
+                        type="checkbox" 
+                        checked={todo.status}
+                        onChange={()=> handleToggleStatus(todo._id)}
+                        />
+                        <label>{todo.title}</label>
+                    </div>
+                    <button className="trash" onClick={() => handleDeleteTodo(todo._id)}>
+                        <FontAwesomeIcon icon={faXmark} />
+                    </button>
+                </article>
+            ))
+        )
     }
 
   return (
