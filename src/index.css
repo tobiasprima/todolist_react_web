@@ -117,7 +117,7 @@ input[type="text"] {
   color: #fff;
 }
 
-.submit:focus, .submit:hover {
+.submit:hover {
   background-color: white;
 }
 
