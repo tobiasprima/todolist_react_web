@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto';
   font-size: 1.5rem;
   color: #9f9fb0;
 }
@@ -70,10 +70,7 @@ input[type="checkbox"] {
   margin-right: 1rem;
   border-radius: 50px;
   border: 2px solid #7491d0;
-}
-
-input[type="checkbox"]:checked {
-  background-color: #7491d0;
+  accent-color: #7491d0;
 }
 
 button {
@@ -135,7 +132,7 @@ input[type="text"] {
   width: 100%;
   display: flex;
   align-items: center;
-  padding-top: 2rem;
+  padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
