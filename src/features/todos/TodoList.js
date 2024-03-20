@@ -47,7 +47,7 @@ const TodoList = () => {
         if (todos && !isError) {
             setTodoWithoutDB(todos)
         }
-    }, [todos])
+    }, [todos, isError])
 
     const handleSubmit = (e)=> {
         e.preventDefault()
