@@ -1,13 +1,13 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faTrash, faUpload, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { 
     useGetTodosQuery,
     useAddTodoMutation,
     useUpdateTodoMutation,
     useDoneTodoMutation,
-    useDeleteTodoMutation 
+    useDeleteTodoMutation
 } from '../../app/api/apiSlice'
 
 const TodoList = () => {
@@ -31,21 +31,22 @@ const TodoList = () => {
     }
 
     const newItemSection = 
-    <form onSubmit={handleSubmit}>
-        <label htmlFor="new-todo">Add to list</label>
-        <div className="new-todo">
-            <input 
-            type="text"
-            id="new-todo"
-            value={newTodo}
-            onChange={(e)=> setNewTodo(e.target.value)}
-            placeholder="Add New Todo"
-            />
-        </div>
-        <button className="submit">
-            <FontAwesomeIcon icon={faUpload} />
-        </button>
-    </form>
+    <div className="new-item-section">
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="new-todo">Add to list</label>
+            <div className="new-todo">
+                <input 
+                type="text"
+                id="new-todo"
+                value={newTodo}
+                onChange={(e)=> setNewTodo(e.target.value)}
+                />
+            </div>
+            <button className="submit">
+                <FontAwesomeIcon icon={faPlus} />
+            </button>
+        </form>
+    </div>
 
     let content;
     if (isLoading) {
@@ -64,7 +65,7 @@ const TodoList = () => {
                         <label htmlFor={todo._id}>{todo.title}</label>
                     </div>
                     <button className="trash" onClick={()=> deleteTodo({ id: todo._id})}>
-                        <FontAwesomeIcon icon={faTrash}/>
+                        <FontAwesomeIcon icon={faXmark}/>
                     </button>
                 </article>
             )
@@ -75,9 +76,30 @@ const TodoList = () => {
 
   return (
     <main>
-        <h1>Todo List</h1>
-        {newItemSection}
-        {content}
+        <header>
+            <h1>Todo List</h1>
+            <p>Add Things to do</p>
+        </header>
+        <hr />
+        <div className='progress-container'>
+            <div className="progress-label">
+                {todos ? Math.round((todos.filter(todo => todo.status).length / todos.length) * 100) : 0}%
+            </div>
+            <progress
+            className="progress-bar" 
+            value={todos ? todos.filter(todo => todo.status).length : 0} 
+            max={todos ? todos.length : 0}
+            />
+        </div>
+        
+        <div className="content">
+            {content}
+        </div>
+        <hr />
+        <div className="bottom-section">
+            <p>Add to list</p>
+            {newItemSection}
+        </div>
     </main>
   )
 }
