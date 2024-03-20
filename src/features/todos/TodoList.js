@@ -1,7 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faTrash, faUpload, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { 
     useGetTodosQuery,
     useAddTodoMutation,
@@ -11,6 +11,7 @@ import {
 } from '../../app/api/apiSlice'
 
 const TodoList = () => {
+    const [ todoWithoutDB, setTodoWithoutDB ] = useState([])
     const [ newTodo, setNewTodo ] = useState('')
 
     const {
@@ -24,10 +25,55 @@ const TodoList = () => {
     const [ doneTodo ] = useDoneTodoMutation()
     const [ deleteTodo ] = useDeleteTodoMutation()
 
+    // Effect to load todos from local storage if there is cache
+    useEffect(() => {
+        const storedTodos = JSON.parse(localStorage.getItem('todos'));
+        if (!todos && storedTodos) {
+            // Set todos to local storage's todos
+            setTodoWithoutDB(storedTodos)
+        } else if (!todos){
+            // If there is no DB and nothing on cache, set the todos to empty array
+            setTodoWithoutDB([])
+        }
+    }, [todos])
+
+    // Effect to save todos to local storage when todos change
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todoWithoutDB))
+    }, [todoWithoutDB])
+
+    // Effect to update local state when there is DB and todos are fetched
+    useEffect(()=> {
+        if (todos && !isError) {
+            setTodoWithoutDB(todos)
+        }
+    }, [todos, isError])
+
     const handleSubmit = (e)=> {
         e.preventDefault()
-        addTodo({title: newTodo})
+        if (newTodo.trim() === '') return // Prevent adding empty todos
+        if (!isError){
+            addTodo({title: newTodo})
+        } else {
+            // Handle submit without database
+            const newTodoWithoutDB = {_id: Date.now(), title: newTodo, status: false}
+            setTodoWithoutDB(prevTodos => [...prevTodos, newTodoWithoutDB])
+        }
+        
         setNewTodo('')
+    }
+
+    // Handle toggle without database
+    const handleToggleStatus = (id) => {
+        setTodoWithoutDB(prevTodos => 
+            prevTodos.map(todo => todo._id === id ? {...todo, status: !todo.status} : todo
+                )
+            )
+    }
+
+    // Handle delete without database
+    const handleDeleteTodo = (id) => {
+        setTodoWithoutDB(prevTodos => prevTodos.filter(todo => todo._id !== id))
     }
 
     const newItemSection = 
@@ -71,7 +117,23 @@ const TodoList = () => {
             )
         })
     } else if (isError) {
-        content = <p>{error.message || 'Error fetching todos'}</p>
+        content = (
+            todoWithoutDB.map(todo => (
+                <article key={todo._id}>
+                    <div className="todo">
+                        <input 
+                        type="checkbox" 
+                        checked={todo.status}
+                        onChange={()=> handleToggleStatus(todo._id)}
+                        />
+                        <label>{todo.title}</label>
+                    </div>
+                    <button className="trash" onClick={() => handleDeleteTodo(todo._id)}>
+                        <FontAwesomeIcon icon={faXmark} />
+                    </button>
+                </article>
+            ))
+        )
     }
 
   return (
