@@ -8,6 +8,7 @@ export const apiSlice = createApi({
     endpoints: (builder) => ({
         getTodos: builder.query({
             query: () => '/todos',
+            transformResponse: res => res.sort((a,b) => b.order - a.order),
             providesTags: ['Todos']
         }),
         addTodo: builder.mutation({
@@ -49,6 +50,14 @@ export const apiSlice = createApi({
                 body: todos
             }),
             invalidatesTags: ['Todos']
+        }),
+        resetTodo: builder.mutation({
+            query: (todos) => ({
+                url: '/todos/reset',
+                method: 'POST',
+                body: todos
+            }),
+            invalidatesTags: ['Todos']
         })
     })
 })
@@ -59,5 +68,6 @@ export const {
     useUpdateTodoMutation,
     useDoneTodoMutation,
     useDeleteTodoMutation,
-    useReorderTodoMutation
+    useReorderTodoMutation,
+    useResetTodoMutation
 } = apiSlice

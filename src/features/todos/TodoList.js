@@ -8,12 +8,14 @@ import {
     useDoneTodoMutation,
     useDeleteTodoMutation,
     useReorderTodoMutation,
+    useResetTodoMutation,
 } from '../../app/api/apiSlice'
 
 const TodoList = () => {
+    const [ isResetDone, setisResetDone ] = useState(false);
     const [ todoWithoutDB, setTodoWithoutDB ] = useState([])
     const [ newTodo, setNewTodo ] = useState('')
-    const [moveDoneToEnd, setMoveDoneToEnd] = useState(false);
+    const [ moveDoneToEnd, setMoveDoneToEnd ] = useState(false);
 
     const {
         data: todos,
@@ -26,6 +28,7 @@ const TodoList = () => {
     const [ doneTodo ] = useDoneTodoMutation()
     const [ deleteTodo ] = useDeleteTodoMutation()
     const [ reorderTodo ] = useReorderTodoMutation()
+    const [ resetTodo ] = useResetTodoMutation()
 
     // Effect to load todos from local storage if there is cache
     useEffect(() => {
@@ -38,6 +41,15 @@ const TodoList = () => {
             setTodoWithoutDB([])
         }
     }, [todos])
+
+    // Reset Order to 0 when page first mounted
+    useEffect(()=> {
+        if (todos && !isResetDone){
+            resetTodo(todos)
+            setisResetDone(true)
+        }
+    }, [todos, isResetDone, resetTodo])
+    
 
     // Effect to save todos to local storage when todos change
     useEffect(() => {
