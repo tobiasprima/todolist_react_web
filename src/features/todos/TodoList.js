@@ -1,4 +1,6 @@
 import React from 'react'
+import TodoForm from './TodoForm'
+import Loader from '../loader/loader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect, useRef } from 'react'
@@ -122,36 +124,9 @@ const TodoList = () => {
            
     }
 
-
-    const newItemSection = 
-    <div className="new-item-section">
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="new-todo">Add to list</label>
-            <div className="new-todo">    
-                <input 
-                type="text"
-                id="new-todo"
-                value={newTodo}
-                onChange={(e)=> setNewTodo(e.target.value)}
-                />
-            </div>
-            <button className="submit">
-                <FontAwesomeIcon icon={faPlus} />
-            </button>
-        </form>
-    </div>
-
     let content;
     if (isLoading) {
-         content =  (
-            <div className="loader">
-                <MoonLoader
-                    color="#92aafa"
-                    loading
-                    size={100}
-                />
-            </div>
-         )
+        <Loader />
     } else if (isSuccess){
         let sortedTodos = todos;
         if (todos.length> 1){
@@ -232,7 +207,11 @@ const TodoList = () => {
         
         <div className="bottom-section">
             <p>Add to list</p>
-            {newItemSection}
+            <TodoForm
+                newTodo={newTodo}
+                setNewTodo={setNewTodo}
+                handleSubmit={handleSubmit}
+            />
         </div>
     </main>
   )
