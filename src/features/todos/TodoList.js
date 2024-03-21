@@ -30,11 +30,11 @@ const TodoList = () => {
         isError,
         refetch: refetchTodos
     } = useGetTodosQuery()
-    const [ addTodo ] = useAddTodoMutation()
-    const [ doneTodo ] = useDoneTodoMutation()
-    const [ deleteTodo ] = useDeleteTodoMutation()
-    const [ reorderTodo ] = useReorderTodoMutation()
-    const [ resetTodo ] = useResetTodoMutation()
+    const [ addTodo, { isLoading: addTodoLoading } ] = useAddTodoMutation()
+    const [ doneTodo, { isLoading: doneTodoLoading } ] = useDoneTodoMutation()
+    const [ deleteTodo, { isLoading: deleteTodoLoading } ] = useDeleteTodoMutation()
+    const [ reorderTodo, { isLoading: reorderTodoLoading } ] = useReorderTodoMutation()
+    const [ resetTodo, { isLoading: resetTodoLoading } ] = useResetTodoMutation()
 
 
     // Effect to load todos from local storage if there is cache
@@ -133,7 +133,7 @@ const TodoList = () => {
     }
 
     let content;
-    if (isLoading) {
+    if (isLoading || addTodoLoading || doneTodoLoading || deleteTodoLoading || reorderTodoLoading || resetTodoLoading) {
         content = <Loader />
     } else if (isSuccess){
         let sortedTodos = todos;
