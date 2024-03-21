@@ -1,4 +1,4 @@
-# TechNotes TodoList Website
+# React TodoList Website
 
 This project is hosted on https://tobiasprima.github.io/todolist_react_web/
 Go Backend for this project is on https://github.com/tobiasprima/todolistapi
