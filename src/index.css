@@ -280,3 +280,9 @@ input:checked + .slider:before {
   background: #92aafa;
   border-radius: 10px
 }
+
+.loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

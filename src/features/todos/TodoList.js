@@ -2,6 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect, useRef } from 'react'
+import MoonLoader from 'react-spinners/MoonLoader'
 import { 
     useGetTodosQuery,
     useAddTodoMutation,
@@ -142,7 +143,15 @@ const TodoList = () => {
 
     let content;
     if (isLoading) {
-        content = <p>Loading ...</p>
+         content =  (
+            <div className="loader">
+                <MoonLoader
+                    color="#92aafa"
+                    loading
+                    size={100}
+                />
+            </div>
+         )
     } else if (isSuccess){
         let sortedTodos = todos;
         if (todos.length> 1){
