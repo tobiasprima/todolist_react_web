@@ -33,8 +33,8 @@ const TodoList = () => {
     const [ addTodo ] = useAddTodoMutation()
     const [ doneTodo ] = useDoneTodoMutation()
     const [ deleteTodo ] = useDeleteTodoMutation()
-    const [ reorderTodo ] = useReorderTodoMutation()
-    const [ resetTodo ] = useResetTodoMutation()
+    const [ reorderTodo, { isLoading: reorderTodoLoading } ] = useReorderTodoMutation()
+    const [ resetTodo, { isLoading: resetTodoLoading } ] = useResetTodoMutation()
 
 
     // Effect to load todos from local storage if there is cache
@@ -133,7 +133,7 @@ const TodoList = () => {
     }
 
     let content;
-    if (isLoading) {
+    if (isLoading || reorderTodoLoading || resetTodoLoading) {
         content = <Loader />
     } else if (isSuccess){
         let sortedTodos = todos;
@@ -189,6 +189,9 @@ const TodoList = () => {
                 setNewTodo={setNewTodo}
                 handleSubmit={handleSubmit}
             />
+        </div>
+        <div className="infos">
+            <span className="ps">Because the backend is hosted on a free cloud provider, the request may take a while.</span>
         </div>
     </main>
   )

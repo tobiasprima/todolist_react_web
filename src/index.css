@@ -286,3 +286,21 @@ input:checked + .slider:before {
   justify-content: center;
   align-items: center;
 }
+
+.infos{
+  position: fixed;
+  margin-top: 1rem;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+}
+
+.ps {
+  justify-content: center;
+  margin-left: 1rem;
+  align-items: center;
+  width: 600px;
+  font-size: 15px;
+}
