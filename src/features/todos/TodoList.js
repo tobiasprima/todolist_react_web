@@ -187,9 +187,14 @@ const TodoList = () => {
             {content}
         </div>
         <hr />
-        <button className="toggle-move" onClick={handleMoveDoneToEnd}>
-                Move done things to end
-            </button>
+        <div className="toggle-switch">
+            <span className="switchlabel">Move done things to end</span>
+            <label className="switch">
+                <input type="checkbox" className="switchbox" onChange={handleMoveDoneToEnd} />
+                <span className="slider round"></span>
+            </label>
+        </div>
+        
         <div className="bottom-section">
             <p>Add to list</p>
             {newItemSection}
