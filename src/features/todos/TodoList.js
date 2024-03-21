@@ -2,6 +2,7 @@ import React from 'react'
 import TodoForm from './TodoForm'
 import Loader from '../loader/loader'
 import TodoItem from './TodoItem'
+import TodoToggleSwitch from '../toggle/ToggleSwitch'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect, useRef } from 'react'
@@ -185,14 +186,7 @@ const TodoList = () => {
             {content}
         </div>
         <hr />
-        <div className="toggle-switch">
-            <span className="switchlabel">Move done things to end</span>
-            <label className="switch">
-                <input type="checkbox" className="switchbox" onChange={handleMoveDoneToEnd} />
-                <span className="slider round"></span>
-            </label>
-        </div>
-        
+        <TodoToggleSwitch handleMoveDoneToEnd={handleMoveDoneToEnd} />
         <div className="bottom-section">
             <p>Add to list</p>
             <TodoForm
