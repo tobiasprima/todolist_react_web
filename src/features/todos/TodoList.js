@@ -1,29 +1,31 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faTrash, faUpload, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react'
 import { 
     useGetTodosQuery,
     useAddTodoMutation,
-    useUpdateTodoMutation,
     useDoneTodoMutation,
-    useDeleteTodoMutation
+    useDeleteTodoMutation,
+    useReorderTodoMutation,
 } from '../../app/api/apiSlice'
 
 const TodoList = () => {
     const [ todoWithoutDB, setTodoWithoutDB ] = useState([])
     const [ newTodo, setNewTodo ] = useState('')
+    const [moveDoneToEnd, setMoveDoneToEnd] = useState(false);
 
     const {
         data: todos,
         isLoading,
         isSuccess,
         isError,
-        error
+        refetch: refetchTodos
     } = useGetTodosQuery()
     const [ addTodo ] = useAddTodoMutation()
     const [ doneTodo ] = useDoneTodoMutation()
     const [ deleteTodo ] = useDeleteTodoMutation()
+    const [ reorderTodo ] = useReorderTodoMutation()
 
     // Effect to load todos from local storage if there is cache
     useEffect(() => {
@@ -76,11 +78,29 @@ const TodoList = () => {
         setTodoWithoutDB(prevTodos => prevTodos.filter(todo => todo._id !== id))
     }
 
+    // Handle Moving Done Todos to Bottom of the list
+    const handleMoveDoneToEnd = async () => {
+        if(todos){
+            await reorderTodo(todos);
+            await refetchTodos();
+        } else {
+            setMoveDoneToEnd((prevMoveDoneToEnd) => !prevMoveDoneToEnd)
+            setTodoWithoutDB((prevTodos) => {
+                // Handle moving done todos without db
+                const doneTodos = prevTodos.filter((todo)=> todo.status)
+                const undoneTodos = prevTodos.filter((todo)=> !todo.status)
+                return moveDoneToEnd ? [...undoneTodos, ...doneTodos] :
+                [...doneTodos, ...undoneTodos]
+            })
+        }
+           
+    }
+
     const newItemSection = 
     <div className="new-item-section">
         <form onSubmit={handleSubmit}>
             <label htmlFor="new-todo">Add to list</label>
-            <div className="new-todo">
+            <div className="new-todo">    
                 <input 
                 type="text"
                 id="new-todo"
@@ -98,7 +118,16 @@ const TodoList = () => {
     if (isLoading) {
         content = <p>Loading ...</p>
     } else if (isSuccess){
-        content = todos.map(todo => {
+        let sortedTodos = todos;
+        if (todos.length> 1){
+            sortedTodos = todos.slice().sort((a, b) => {
+                if (a.order !== 0 && b.order !==0){
+                    return b.order - a.order
+                }
+                return a.order - b.order
+            })
+        }
+        content = sortedTodos.map(todo => {
             return (
                 <article key={todo._id}>
                     <div className="todo">
@@ -158,6 +187,9 @@ const TodoList = () => {
             {content}
         </div>
         <hr />
+        <button className="toggle-move" onClick={handleMoveDoneToEnd}>
+                Move done things to end
+            </button>
         <div className="bottom-section">
             <p>Add to list</p>
             {newItemSection}

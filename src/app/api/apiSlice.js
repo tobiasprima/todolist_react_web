@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const apiSlice = createApi({
+    // https://todolistapi-kcjj.onrender.com
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://todolistapi-kcjj.onrender.com' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8080' }),
     tagTypes: ['Todos'],
     endpoints: (builder) => ({
         getTodos: builder.query({
@@ -40,6 +41,14 @@ export const apiSlice = createApi({
                 body: id
             }),
             invalidatesTags: ['Todos']
+        }),
+        reorderTodo: builder.mutation({
+            query: (todos)=> ({
+                url: '/todos/reorder',
+                method: 'PATCH',
+                body: todos
+            }),
+            invalidatesTags: ['Todos']
         })
     })
 })
@@ -49,5 +58,6 @@ export const {
     useAddTodoMutation,
     useUpdateTodoMutation,
     useDoneTodoMutation,
-    useDeleteTodoMutation
+    useDeleteTodoMutation,
+    useReorderTodoMutation
 } = apiSlice
