@@ -10,7 +10,7 @@ const TodoForm = ({ newTodo, setNewTodo, handleSubmit }) => {
                 <div className='new-todo'>
                     <input type='text' id='new-todo' value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
                 </div>
-                <button className='submit'>
+                <button className='submit plus'>
                     <FontAwesomeIcon icon={faPlus} />
                 </button>
             </form>
