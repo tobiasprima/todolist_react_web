@@ -30,9 +30,9 @@ const TodoList = () => {
         isError,
         refetch: refetchTodos
     } = useGetTodosQuery()
-    const [ addTodo, { isLoading: addTodoLoading } ] = useAddTodoMutation()
-    const [ doneTodo, { isLoading: doneTodoLoading } ] = useDoneTodoMutation()
-    const [ deleteTodo, { isLoading: deleteTodoLoading } ] = useDeleteTodoMutation()
+    const [ addTodo ] = useAddTodoMutation()
+    const [ doneTodo ] = useDoneTodoMutation()
+    const [ deleteTodo ] = useDeleteTodoMutation()
     const [ reorderTodo, { isLoading: reorderTodoLoading } ] = useReorderTodoMutation()
     const [ resetTodo, { isLoading: resetTodoLoading } ] = useResetTodoMutation()
 
@@ -133,7 +133,7 @@ const TodoList = () => {
     }
 
     let content;
-    if (isLoading || addTodoLoading || doneTodoLoading || deleteTodoLoading || reorderTodoLoading || resetTodoLoading) {
+    if (isLoading || reorderTodoLoading || resetTodoLoading) {
         content = <Loader />
     } else if (isSuccess){
         let sortedTodos = todos;
