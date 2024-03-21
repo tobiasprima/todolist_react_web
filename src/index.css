@@ -181,6 +181,8 @@ input[type="text"] {
 
 .content{
   margin-bottom: 2rem;
+  max-height: 600px;
+  overflow-y: auto;
 }
 
 .submit:hover .svg-inline--fa {
