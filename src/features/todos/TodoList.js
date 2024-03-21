@@ -176,7 +176,7 @@ const TodoList = () => {
     <main>
         <Header />
         <hr />
-        <ProgressBar todos={todos} />
+        <ProgressBar todos={todoWithoutDB} />
         <div className="content">
             {content}
         </div>

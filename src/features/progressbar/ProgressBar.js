@@ -1,13 +1,18 @@
 import React from 'react';
 
 const ProgressBar = ({ todos }) => {
+    const progressData = todos || [];
+    const completedTodos = progressData.filter(todo => todo.status).length;
+    const totalTodos = progressData.length;
+    const progressPercentage = totalTodos !== 0 ? Math.round((completedTodos / totalTodos) * 100) : 0;
+
     return (
         <div className="progress-container">
-            <div className="progress-label">{todos ? Math.round((todos.filter((todo) => todo.status).length / todos.length) * 100) : 0}%</div>
+            <div className="progress-label">{progressPercentage}%</div>
             <progress
                 className="progress-bar"
-                value={todos ? todos.filter((todo) => todo.status).length : 0}
-                max={todos ? todos.length : 0}
+                value={completedTodos}
+                max={totalTodos}
             />
         </div>
     );

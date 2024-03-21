@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const apiSlice = createApi({
     // https://todolistapi-kcjj.onrender.com
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: '' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://todolistapi-kcjj.onrender.com' }),
     tagTypes: ['Todos'],
     endpoints: (builder) => ({
         getTodos: builder.query({
