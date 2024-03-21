@@ -1,6 +1,7 @@
 import React from 'react'
 import TodoForm from './TodoForm'
 import Loader from '../loader/loader'
+import TodoItem from './TodoItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect, useRef } from 'react'
@@ -126,7 +127,7 @@ const TodoList = () => {
 
     let content;
     if (isLoading) {
-        <Loader />
+        content = <Loader />
     } else if (isSuccess){
         let sortedTodos = todos;
         if (todos.length> 1){
@@ -139,38 +140,25 @@ const TodoList = () => {
         }
         content = sortedTodos.map(todo => {
             return (
-                <article ref={todo._id === newTodoId ? scrollToRef: null} key={todo._id}>
-                    <div className="todo">
-                        <input 
-                        type="checkbox" 
-                        checked={todo.status}
-                        id={todo._id}
-                        onChange={()=> doneTodo({ id: todo._id, status: !todo.status})}
-                        />
-                        <label htmlFor={todo._id}>{todo.title}</label>
-                    </div>
-                    <button className="trash" onClick={()=> deleteTodo({ id: todo._id})}>
-                        <FontAwesomeIcon icon={faXmark}/>
-                    </button>
-                </article>
+                <TodoItem
+                    key={todo._id}
+                    todo={todo}
+                    newTodoId={newTodoId}
+                    scrollToRef={scrollToRef}
+                    doneTodo={doneTodo}
+                    deleteTodo={deleteTodo}
+                />
             )
         })
     } else if (isError) {
         content = (
             todoWithoutDB.map(todo => (
-                <article key={todo._id}>
-                    <div className="todo">
-                        <input 
-                        type="checkbox" 
-                        checked={todo.status}
-                        onChange={()=> handleToggleStatus(todo._id)}
-                        />
-                        <label>{todo.title}</label>
-                    </div>
-                    <button className="trash" onClick={() => handleDeleteTodo(todo._id)}>
-                        <FontAwesomeIcon icon={faXmark} />
-                    </button>
-                </article>
+                <TodoItem
+                key={todo._id}
+                todo={todo}
+                handleToggleStatus={handleToggleStatus}
+                handleDeleteTodo={handleDeleteTodo}
+            />
             ))
         )
     }
