@@ -1,7 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { 
     useGetTodosQuery,
     useAddTodoMutation,
@@ -12,10 +12,12 @@ import {
 } from '../../app/api/apiSlice'
 
 const TodoList = () => {
-    const [ isResetDone, setisResetDone ] = useState(false);
+    const [ isResetDone, setisResetDone ] = useState(false)
     const [ todoWithoutDB, setTodoWithoutDB ] = useState([])
     const [ newTodo, setNewTodo ] = useState('')
-    const [ moveDoneToEnd, setMoveDoneToEnd ] = useState(false);
+    const [ moveDoneToEnd, setMoveDoneToEnd ] = useState(false)
+    const [ newTodoId, setNewTodoId ] = useState(null)
+    const scrollToRef = useRef(null)
 
     const {
         data: todos,
@@ -63,15 +65,26 @@ const TodoList = () => {
         }
     }, [todos, isError])
 
+    // Effect to scroll to the newly created todo
+    useEffect(()=> {
+        if (scrollToRef.current) {
+            scrollToRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest'})
+        }
+    })
+
     const handleSubmit = (e)=> {
         e.preventDefault()
         if (newTodo.trim() === '') return // Prevent adding empty todos
         if (!isError){
-            addTodo({title: newTodo})
+            addTodo({title: newTodo}).then((response) => {
+                // Scroll to New todo
+                setNewTodoId(response.data._id)
+            })
         } else {
             // Handle submit without database
             const newTodoWithoutDB = {_id: Date.now(), title: newTodo, status: false}
             setTodoWithoutDB(prevTodos => [...prevTodos, newTodoWithoutDB])
+            setNewTodoId(newTodoWithoutDB._id)
         }
         
         setNewTodo('')
@@ -108,6 +121,7 @@ const TodoList = () => {
            
     }
 
+
     const newItemSection = 
     <div className="new-item-section">
         <form onSubmit={handleSubmit}>
@@ -141,7 +155,7 @@ const TodoList = () => {
         }
         content = sortedTodos.map(todo => {
             return (
-                <article key={todo._id}>
+                <article ref={todo._id === newTodoId ? scrollToRef: null} key={todo._id}>
                     <div className="todo">
                         <input 
                         type="checkbox" 
