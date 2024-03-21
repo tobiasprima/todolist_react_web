@@ -190,6 +190,9 @@ const TodoList = () => {
                 handleSubmit={handleSubmit}
             />
         </div>
+        <div className="infos">
+            <span className="ps">Because the backend is hosted on a free cloud provider, the request may take a while.</span>
+        </div>
     </main>
   )
 }
