@@ -260,3 +260,23 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  overflow: auto;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px
+}
+
+::-webkit-scrollbar-thumb {
+  background: #92aafa;
+  border-radius: 10px
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #92aafa;
+  border-radius: 10px
+}
