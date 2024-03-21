@@ -1,5 +1,8 @@
 import React from 'react';
 
+// ToggleSwitch component renders a switch to toggle moving done items to the end of the list
+// Props:
+// - handleMoveDoneToEnd: Function to handle moving done todos to the bottom of the list
 const ToggleSwitch = ({ handleMoveDoneToEnd }) => {
     return (
         <div className="toggle-switch">
