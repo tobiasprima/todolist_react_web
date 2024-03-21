@@ -1,9 +1,10 @@
 import React from 'react'
-import TodoForm from './TodoForm'
-import Loader from '../loader/loader'
+import Loader from '../loader/Loader'
+import Header from '../header/Header'
 import ProgressBar from '../progressbar/ProgressBar'
 import TodoItem from './TodoItem'
 import ToggleSwitch from '../toggle/ToggleSwitch'
+import TodoForm from './TodoForm'
 import { useState, useEffect, useRef } from 'react'
 import { 
     useGetTodosQuery,
@@ -164,10 +165,7 @@ const TodoList = () => {
 
   return (
     <main>
-        <header>
-            <h1>Todo List</h1>
-            <p>Add Things to do</p>
-        </header>
+        <Header />
         <hr />
         <ProgressBar todos={todos} />
         <div className="content">
