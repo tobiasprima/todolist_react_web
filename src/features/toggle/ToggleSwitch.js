@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TodoToggleSwitch = ({ handleMoveDoneToEnd }) => {
+const ToggleSwitch = ({ handleMoveDoneToEnd }) => {
     return (
         <div className="toggle-switch">
             <span className="switchlabel">Move done things to end</span>
@@ -12,4 +12,4 @@ const TodoToggleSwitch = ({ handleMoveDoneToEnd }) => {
     );
 };
 
-export default TodoToggleSwitch;
+export default ToggleSwitch;

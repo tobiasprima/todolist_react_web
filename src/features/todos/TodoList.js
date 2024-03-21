@@ -1,12 +1,10 @@
 import React from 'react'
 import TodoForm from './TodoForm'
 import Loader from '../loader/loader'
+import ProgressBar from '../progressbar/ProgressBar'
 import TodoItem from './TodoItem'
-import TodoToggleSwitch from '../toggle/ToggleSwitch'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
+import ToggleSwitch from '../toggle/ToggleSwitch'
 import { useState, useEffect, useRef } from 'react'
-import MoonLoader from 'react-spinners/MoonLoader'
 import { 
     useGetTodosQuery,
     useAddTodoMutation,
@@ -171,22 +169,12 @@ const TodoList = () => {
             <p>Add Things to do</p>
         </header>
         <hr />
-        <div className='progress-container'>
-            <div className="progress-label">
-                {todos ? Math.round((todos.filter(todo => todo.status).length / todos.length) * 100) : 0}%
-            </div>
-            <progress
-            className="progress-bar" 
-            value={todos ? todos.filter(todo => todo.status).length : 0} 
-            max={todos ? todos.length : 0}
-            />
-        </div>
-        
+        <ProgressBar todos={todos} />
         <div className="content">
             {content}
         </div>
         <hr />
-        <TodoToggleSwitch handleMoveDoneToEnd={handleMoveDoneToEnd} />
+        <ToggleSwitch handleMoveDoneToEnd={handleMoveDoneToEnd} />
         <div className="bottom-section">
             <p>Add to list</p>
             <TodoForm
