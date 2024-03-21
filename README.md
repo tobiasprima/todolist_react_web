@@ -1,7 +1,13 @@
 # React TodoList Website
 
 This project is hosted on https://tobiasprima.github.io/todolist_react_web/
+
+
 Go Backend for this project is on https://github.com/tobiasprima/todolistapi
+
+<img width="1436" alt="Screenshot 2024-03-22 at 12 52 37 AM" src="https://github.com/tobiasprima/todolist_react_web/assets/88434271/0fceb531-22ff-4ad7-b4a8-b17ab8c6d85e">
+
+
 
 ## Quick Start
 1. Clone Frontend
