@@ -1,4 +1,4 @@
-name: Deploy using Github Action
+name: CI
 
 on:
   push:
@@ -30,11 +30,4 @@ jobs:
       run: npm run build --if-present
 
     - name: Run tests
-      run: npm test
-
-
-    # I don't need CD
-    # - name: Deploy 🚀
-    #   uses: JamesIves/github-pages-deploy-action@v4
-    #   with:
-    #     folder: build
+      run: npm tes
