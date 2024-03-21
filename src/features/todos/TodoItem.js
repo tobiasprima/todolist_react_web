@@ -11,6 +11,14 @@ const TodoItem = ({ todo, newTodoId, scrollToRef, doneTodo, deleteTodo, handleTo
             handleToggleStatus(todo._id)
         }
     }
+
+    const handleDelete = () => {
+        if (deleteTodo) {
+            deleteTodo({ id: todo._id })
+        } else if (handleDelete) {
+            handleDeleteTodo(todo._id)
+        }
+    }
     return (
         <article ref={todo._id === newTodoId ? scrollToRef : null}>
             <div className="todo">
@@ -22,7 +30,7 @@ const TodoItem = ({ todo, newTodoId, scrollToRef, doneTodo, deleteTodo, handleTo
                 />
                 <label htmlFor={todo._id}>{todo.title}</label>
             </div>
-            <button className="trash" onClick={() => deleteTodo({ id: todo._id })}>
+            <button className="trash" onClick={handleDelete}>
                 <FontAwesomeIcon icon={faXmark} />
             </button>
         </article>
