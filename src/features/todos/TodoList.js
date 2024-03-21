@@ -36,6 +36,7 @@ const TodoList = () => {
     const [ reorderTodo ] = useReorderTodoMutation()
     const [ resetTodo ] = useResetTodoMutation()
 
+
     // Effect to load todos from local storage if there is cache
     useEffect(() => {
         const storedTodos = JSON.parse(localStorage.getItem('todos'));
@@ -48,14 +49,13 @@ const TodoList = () => {
         }
     }, [todos])
 
-    // Reset Order to 0 when page first mounted
+    // Reset Todos' Order to 0 when page first mounted
     useEffect(()=> {
         if (todos && !isResetDone){
             resetTodo(todos)
             setisResetDone(true)
         }
     }, [todos, isResetDone, resetTodo])
-    
 
     // Effect to save todos to local storage when todos change
     useEffect(() => {
@@ -71,30 +71,37 @@ const TodoList = () => {
 
     // Effect to scroll to the newly created todo
     useEffect(()=> {
-        if (scrollToRef.current) {
-            scrollToRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest'})
+        if(!moveDoneToEnd){
+            if (scrollToRef.current) {
+                scrollToRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest'})
+            }
         }
     })
 
+    // Handle New Todo
     const handleSubmit = (e)=> {
         e.preventDefault()
         if (newTodo.trim() === '') return // Prevent adding empty todos
         if (!isError){
             addTodo({title: newTodo}).then((response) => {
-                // Scroll to New todo
+                // Scroll to newly created todo
                 setNewTodoId(response.data._id)
             })
         } else {
             // Handle submit without database
             const newTodoWithoutDB = {_id: Date.now(), title: newTodo, status: false}
-            setTodoWithoutDB(prevTodos => [...prevTodos, newTodoWithoutDB])
-            setNewTodoId(newTodoWithoutDB._id)
+            if (moveDoneToEnd) {
+                setTodoWithoutDB((prevTodos) => [newTodoWithoutDB, ...prevTodos]);
+            } else {
+                setTodoWithoutDB((prevTodos) => [...prevTodos, newTodoWithoutDB]);
+            }
+            setNewTodoId(newTodoWithoutDB._id) // Scroll to newly created todo
         }
         
         setNewTodo('')
     }
 
-    // Handle toggle without database
+    // Handle Todos' complete checkbox without database
     const handleToggleStatus = (id) => {
         setTodoWithoutDB(prevTodos => 
             prevTodos.map(todo => todo._id === id ? {...todo, status: !todo.status} : todo
@@ -118,11 +125,11 @@ const TodoList = () => {
                 // Handle moving done todos without db
                 const doneTodos = prevTodos.filter((todo)=> todo.status)
                 const undoneTodos = prevTodos.filter((todo)=> !todo.status)
-                return moveDoneToEnd ? [...undoneTodos, ...doneTodos] :
-                [...doneTodos, ...undoneTodos]
+                return moveDoneToEnd ? [...doneTodos, ...undoneTodos] :
+                [...undoneTodos, ...doneTodos]
+                
             })
         }
-           
     }
 
     let content;
@@ -149,13 +156,15 @@ const TodoList = () => {
                     deleteTodo={deleteTodo}
                 />
             )
-        })
+        })  
     } else if (isError) {
         content = (
             todoWithoutDB.map(todo => (
                 <TodoItem
                 key={todo._id}
                 todo={todo}
+                newTodoId={newTodoId}
+                scrollToRef={scrollToRef}
                 handleToggleStatus={handleToggleStatus}
                 handleDeleteTodo={handleDeleteTodo}
             />
