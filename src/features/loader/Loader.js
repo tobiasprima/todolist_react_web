@@ -1,6 +1,7 @@
 import React from 'react';
 import MoonLoader from 'react-spinners/MoonLoader';
 
+// Loader component displays a spinning loader animation
 const Loader = () => {
     return (
         <div className='loader'>

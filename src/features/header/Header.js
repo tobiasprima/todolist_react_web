@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Header component displays the title and description of the todo list
 const Header = () => {
     return (
         <header>
