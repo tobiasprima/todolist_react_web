@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/todolist_react_web/static/css/main.46ba8ead.css",
-    "main.js": "/todolist_react_web/static/js/main.a23a0d39.js",
+    "main.js": "/todolist_react_web/static/js/main.35db762a.js",
     "static/media/Submariner Regular.ttf": "/todolist_react_web/static/media/Submariner Regular.58f6fc0fed1b2226ab73.ttf",
     "index.html": "/todolist_react_web/index.html",
     "main.46ba8ead.css.map": "/todolist_react_web/static/css/main.46ba8ead.css.map",
-    "main.a23a0d39.js.map": "/todolist_react_web/static/js/main.a23a0d39.js.map"
+    "main.35db762a.js.map": "/todolist_react_web/static/js/main.35db762a.js.map"
   },
   "entrypoints": [
     "static/css/main.46ba8ead.css",
-    "static/js/main.a23a0d39.js"
+    "static/js/main.35db762a.js"
   ]
 }
