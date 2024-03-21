@@ -2,7 +2,15 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const TodoItem = ({ todo, newTodoId, scrollToRef, doneTodo, deleteTodo }) => {
+
+const TodoItem = ({ todo, newTodoId, scrollToRef, doneTodo, deleteTodo, handleToggleStatus, handleDeleteTodo  }) => {
+    const toggleStatus = ()=> {
+        if (doneTodo) {
+            doneTodo({ id: todo._id, status: !todo.status})
+        } else if (handleToggleStatus) {
+            handleToggleStatus(todo._id)
+        }
+    }
     return (
         <article ref={todo._id === newTodoId ? scrollToRef : null}>
             <div className="todo">
@@ -10,7 +18,7 @@ const TodoItem = ({ todo, newTodoId, scrollToRef, doneTodo, deleteTodo }) => {
                     type="checkbox"
                     checked={todo.status}
                     id={todo._id}
-                    onChange={() => doneTodo({ id: todo._id, status: !todo.status })}
+                    onChange={toggleStatus}
                 />
                 <label htmlFor={todo._id}>{todo.title}</label>
             </div>
